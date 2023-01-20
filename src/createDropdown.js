@@ -51,23 +51,36 @@ export const createDropdown = (
     dropdownContent.appendChild(dropdownOptionAnchor);
   }
 
+  function show() {
+    dropdownContent.classList.add('dropdown-content-show');
+  }
+
+  function hide() {
+    if (dropdownContent.classList.contains('dropdown-content-show')) {
+      dropdownContent.classList.remove('dropdown-content-show');
+    }
+  }
+
   if (isOpenOnHover) {
     // Hoverable dropdown setup
-    dropdownContainer.addEventListener('mouseover', () => {});
+    dropdownContainer.addEventListener('mouseover', () => {
+      show();
+    });
+    dropdownContainer.addEventListener('mouseout', () => {
+      hide();
+    });
   } else {
     // Clickable dropdown setup
     // Open the dropdown menu if the user clicks on it
     dropdownContainer.addEventListener('click', (e) => {
       e.stopPropagation();
-      dropdownContent.classList.add('dropdown-content-show');
+      show();
     });
 
     // Close the dropdown menu if the user clicks on anything else
     window.onclick = function (e) {
       if (!e.target.matches('.dropdown-button')) {
-        if (dropdownContent.classList.contains('dropdown-content-show')) {
-          dropdownContent.classList.remove('dropdown-content-show');
-        }
+        hide();
       }
     };
   }

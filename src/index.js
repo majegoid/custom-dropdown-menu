@@ -1,9 +1,9 @@
 import { createDropdown } from './createDropdown';
 import './styles/index.css';
 
-const dropdown = createDropdown(
-  'test-dropdown',
-  'Test Dropdown',
+const clickableDropdown = createDropdown(
+  'test-clickable-dropdown',
+  'Test Clickable Dropdown',
   [
     { href: '#test-choice-a', label: 'Test Choice A' },
     { href: '#test-choice-b', label: 'Test Choice B' },
@@ -11,4 +11,22 @@ const dropdown = createDropdown(
   ],
   false
 );
-document.querySelector('div#root').appendChild(dropdown);
+
+const hoverableDropdown = createDropdown(
+  'test-hoverable-dropdown',
+  'Test Hoverable Dropdown',
+  [
+    { href: '#test-choice-a', label: 'Test Choice A' },
+    { href: '#test-choice-b', label: 'Test Choice B' },
+    { href: '#test-choice-c', label: 'Test Choice C' },
+  ],
+  true
+);
+
+const rootElem = document.querySelector('div#root');
+const spacerDiv = document.createElement('div');
+spacerDiv.style.height = '100px';
+
+rootElem.appendChild(clickableDropdown);
+rootElem.appendChild(spacerDiv);
+rootElem.appendChild(hoverableDropdown);
