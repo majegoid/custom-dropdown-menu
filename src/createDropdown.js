@@ -1,29 +1,75 @@
 export const createDropdown = (
-  dropdownId = '',
-  dropdownName = '',
-  valuesArr = ['Choice 1', 'Choice 2', 'Choice 3'],
+  dropdownId = undefined,
+  dropdownName = 'Dropdown',
+  optionsArr = [
+    { href: '#choice-1', label: 'Choice 1' },
+    { href: '#choice-2', label: 'Choice 2' },
+    { href: '#choice-3', label: 'Choice 3' },
+  ],
   isOpenOnHover = false
 ) => {
-  // <select name="" id="">
-  //   <option value="">1</option>
-  //   <option value="">2</option>
-  //   <option value="">3</option>
-  // </select>
+  optionsArr = optionsArr.map((opt) => {
+    if (typeof opt === 'string') {
+      return { href: '#', label: opt };
+    }
+    return opt;
+  });
 
-  const dropdown = document.createElement('select');
-  for (value of valuesArr) {
-    const dropdownOptionElem = document.createElement('option');
-    dropdownOptionElem.value = value;
-    dropdown.appendChild(dropdownOptionElem);
+  // <div class="dropdown-container">
+  //   <button class="dropdown-button">Dropdown</button>
+  //   <div class="dropdown-content">
+  //     <a href="#">Link 1</a>
+  //     <a href="#">Link 2</a>
+  //     <a href="#">Link 3</a>
+  //   </div>
+  // </div>
+
+  const dropdownContainer = document.createElement('div');
+  dropdownContainer.id = dropdownId;
+  dropdownContainer.name = dropdownName;
+  dropdownContainer.className = 'dropdown-container';
+
+  const dropdownButton = document.createElement('button');
+  dropdownButton.className = 'dropdown-button';
+  dropdownButton.textContent = dropdownName;
+  dropdownContainer.appendChild(dropdownButton);
+
+  const dropdownContent = document.createElement('div');
+  dropdownContent.className = 'dropdown-content';
+  // Close dropdown when clicking the dropdownContent
+  dropdownContent.addEventListener('click', (e) => {
+    e.stopPropagation();
+    console.log('clicked');
+    dropdownContent.classList.remove('dropdown-content-show');
+  });
+  dropdownContainer.appendChild(dropdownContent);
+
+  for (const optionObj of optionsArr) {
+    const dropdownOptionAnchor = document.createElement('a');
+    dropdownOptionAnchor.href = optionObj.href;
+    dropdownOptionAnchor.textContent = optionObj.label;
+    dropdownContent.appendChild(dropdownOptionAnchor);
   }
-  if (dropdownId) {
-    dropdown.id = dropdownId;
-  }
-  if (dropdownName) {
-    dropdown.name = dropdownName;
-  }
+
   if (isOpenOnHover) {
-    dropdown.addEventListener('hover');
+    // Hoverable dropdown setup
+    dropdownContainer.addEventListener('mouseover', () => {});
+  } else {
+    // Clickable dropdown setup
+    // Open the dropdown menu if the user clicks on it
+    dropdownContainer.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdownContent.classList.add('dropdown-content-show');
+    });
+
+    // Close the dropdown menu if the user clicks on anything else
+    window.onclick = function (e) {
+      if (!e.target.matches('.dropdown-button')) {
+        if (dropdownContent.classList.contains('dropdown-content-show')) {
+          dropdownContent.classList.remove('dropdown-content-show');
+        }
+      }
+    };
   }
-  return dropdown;
+  return dropdownContainer;
 };
