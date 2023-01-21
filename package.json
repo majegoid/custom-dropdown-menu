@@ -10,8 +10,7 @@
     "build-dev": "webpack",
     "clean": "rm -rf dist",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "minify-module": "sh scripts/minify_module.sh"
+    "lint:fix": "eslint . --fix"
   },
   "author": "majegoid",
   "license": "ISC",

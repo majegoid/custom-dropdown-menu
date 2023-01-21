@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 let mode = 'development'; //default to development
-let target = 'web'; //default to no backwards compatibility (?)
+let target = 'web'; //default to no backwards compatibility
 
 //change to production if process NODE_ENV variable is 'production'
 if (process.env.NODE_ENV === 'production') {
@@ -14,25 +14,22 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   mode: mode, //optimize for development or production
-  target: target, //build for the web with or without backwards compatibility (browserslist)(?)
+  target: target, //build for the web with or without backwards compatibility (browserslist)
+  entry: {
+    index: './src/index.js',
+    createDropdown: './src/createDropdown.js',
+  },
   output: {
-    //where does the output go?
-    path: path.resolve(__dirname, 'dist'), //<this file's folder> + './dist'
-    assetModuleFilename: 'images/[hash][ext][query]', //images are named and put in a folder with a hash, extension, and query(?)
+    filename: '[name].js',
+    library: 'custom-dropdown-menu',
+    libraryTarget: 'umd',
+    globalObject: 'this',
+    path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: 'images/[hash][ext][query]',
   },
   module: {
     //how to treat the files in this app (are they importable code, css, images, or other files?)
     rules: [
-      // images are "assets" and must be no more than 30 MiB to be included in the build output
-      {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        type: 'asset',
-        parser: {
-          dataUrlCondition: {
-            maxSize: 30 * 1024,
-          },
-        },
-      },
       // css imported into JS files will be turned into a main.css bundle
       {
         test: /\.css$/i,
@@ -53,7 +50,7 @@ module.exports = {
   },
   //
   plugins: [
-    new CleanWebpackPlugin(), //removes build folders
+    new CleanWebpackPlugin(), // removes dist folder on build
     new MiniCssExtractPlugin(), // extracts CSS into separate files. It creates a CSS file per JS file which contains CSS.
     new HtmlWebpackPlugin({ template: './src/index.html' }), //makes an index.html file with every built JS and CSS file attached, uses a template file's skeleton
   ],
