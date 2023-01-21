@@ -1,5 +1,9 @@
-import { createDropdown } from './createDropdown';
-import './styles/index.css';
+// import { createDropdown } from './createDropdown';
+// import './styles/index.css';
+
+// WORKS WITH BUILT MODULES TEST
+import '../modules/index.css';
+import { createDropdown } from '../modules/index.js';
 
 const clickableDropdown = createDropdown(
   'test-clickable-dropdown',
