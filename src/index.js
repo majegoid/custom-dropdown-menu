@@ -1,13 +1,7 @@
-// import { createDropdown } from './createDropdown';
-// import './styles/index.css';
-
-// WORKS WITH MANUALLY MINIFIED CSS AND JS TEST
-// import '../modules/index.css';
-// import { createDropdown } from '../modules/index.js';
-
-// WORKS WITH NEW OUTPUT CONFIG TEST
-import { createDropdown } from '../dist/createDropdown.js';
-// import './styles/index.css';
+import { createDropdown } from './createDropdown';
+import './styles/index.css';
+// import '../dist/createDropdown.css';
+// import { createDropdown } from '../dist/createDropdown.js';
 
 const clickableDropdown = createDropdown(
   'test-clickable-dropdown',

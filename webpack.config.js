@@ -1,5 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
@@ -48,7 +49,9 @@ module.exports = {
       },
     ],
   },
-  //
+  optimization: {
+    minimizer: [new CssMinimizerPlugin()], //minimize CSS files
+  },
   plugins: [
     new CleanWebpackPlugin(), // removes dist folder on build
     new MiniCssExtractPlugin(), // extracts CSS into separate files. It creates a CSS file per JS file which contains CSS.
