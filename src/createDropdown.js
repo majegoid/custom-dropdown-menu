@@ -39,7 +39,6 @@ export const createDropdown = (
   // Close dropdown when clicking the dropdownContent
   dropdownContent.addEventListener('click', (e) => {
     e.stopPropagation();
-    console.log('clicked');
     dropdownContent.classList.remove('dropdown-content-show');
   });
   dropdownContainer.appendChild(dropdownContent);
