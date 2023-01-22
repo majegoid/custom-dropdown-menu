@@ -22,9 +22,12 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    library: 'custom-dropdown-menu',
-    libraryTarget: 'umd',
-    globalObject: 'this',
+    library: {
+      // name: 'MyLibrary',
+      type: 'module',
+      // umdNamedDefine: true,
+    },
+    // globalObject: 'this',
     path: path.resolve(__dirname, 'dist'),
     assetModuleFilename: 'images/[hash][ext][query]',
   },
@@ -41,7 +44,7 @@ module.exports = {
       },
       // js files will be transpiled by babel-loader into a main.js bundle
       {
-        test: /\.js$/,
+        test: /\.(js)$/,
         exclude: /node_modules/, // do not attempt to build anything inside of node_modules
         use: {
           loader: 'babel-loader', //use babel to load JS files
@@ -55,7 +58,10 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(), // removes dist folder on build
     new MiniCssExtractPlugin(), // extracts CSS into separate files. It creates a CSS file per JS file which contains CSS.
-    new HtmlWebpackPlugin({ template: './src/index.html' }), //makes an index.html file with every built JS and CSS file attached, uses a template file's skeleton
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      scriptLoading: 'module',
+    }), //makes an index.html file with every built JS and CSS file attached, uses a template file's skeleton
   ],
   // determines the order that files are "resolved" in
   resolve: {
@@ -66,5 +72,8 @@ module.exports = {
     //configure webpack devserver
     static: './dist', //serve static files from the dist folder
     hot: true, //enable HMR, allowing for module replacement without full reloads
+  },
+  experiments: {
+    outputModule: true,
   },
 };

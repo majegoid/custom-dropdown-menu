@@ -1,7 +1,12 @@
-import { createDropdown } from './createDropdown';
-import './styles/index.css';
+// import { createDropdown } from './createDropdown';
+// import './styles/index.css';
 // import '../dist/createDropdown.css';
 // import { createDropdown } from '../dist/createDropdown.js';
+
+import '@majegoid/my-test-package/index.css';
+import { createDropdown } from '@majegoid/my-test-package';
+
+// console.log(createDropdown);
 
 const clickableDropdown = createDropdown(
   'test-clickable-dropdown',
