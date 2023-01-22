@@ -64,11 +64,22 @@ export const createDropdown = (
 
   if (isOpenOnHover) {
     // Hoverable dropdown setup
-    dropdownContainer.addEventListener('mouseover', () => {
-      show();
-    });
-    dropdownContainer.addEventListener('mouseout', () => {
-      hide();
+    window.addEventListener('mouseover', (e) => {
+      // detect if dropdownContainer is in moused over element's hierarchy
+      let currentElement = e.target;
+      let isDropdownContainerInHierarchy = false;
+      while (currentElement !== null) {
+        if (currentElement === dropdownContainer) {
+          isDropdownContainerInHierarchy = true;
+          break;
+        }
+        currentElement = currentElement.parentElement;
+      }
+      if (!isDropdownContainerInHierarchy) {
+        hide();
+      } else {
+        show();
+      }
     });
   } else {
     // Clickable dropdown setup
